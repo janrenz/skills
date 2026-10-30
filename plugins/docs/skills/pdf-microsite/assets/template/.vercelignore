@@ -1,0 +1,7 @@
+build.py
+checks
+.env*
+*.pdf
+README.md
+site.json
+src

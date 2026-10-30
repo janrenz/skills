@@ -1,0 +1,4 @@
+# Lesefassung, nicht zur Aufnahme in Suchmaschinen gedacht (siehe noindex im HTML).
+# Abrufen ist erlaubt, damit Crawler das noindex sehen und Agents den Text lesen können.
+User-agent: *
+Allow: /

@@ -1,0 +1,7 @@
+{
+  "name": "pdf-microsite-checks",
+  "private": true,
+  "type": "module",
+  "description": "Prüfwerkzeuge des Skills pdf-microsite: axe-Audit, Layout, Verhalten",
+  "dependencies": { "axe-core": "^4.10.0", "playwright-core": "^1.55.0" }
+}

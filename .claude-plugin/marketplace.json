@@ -1,0 +1,24 @@
+{
+  "name": "janrenz-skills",
+  "owner": {
+    "name": "Jan Renz",
+    "url": "https://github.com/janrenz"
+  },
+  "metadata": {
+    "description": "Allgemeine Claude-Code-Skills von Jan Renz"
+  },
+  "plugins": [
+    {
+      "name": "docs",
+      "source": "./plugins/docs",
+      "description": "PDF-Papiere als barrierefreie, durchsuchbare Microsite (pdf-microsite)",
+      "category": "documents"
+    },
+    {
+      "name": "media",
+      "source": "./plugins/media",
+      "description": "Bilder mit Gemini auf Vertex AI oder per API-Key erzeugen und bearbeiten (gemini-image)",
+      "category": "media"
+    }
+  ]
+}

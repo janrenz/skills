@@ -1,0 +1,10 @@
+{
+  "name": "media",
+  "version": "0.1.0",
+  "description": "Bilder mit einem Gemini-Bildmodell erzeugen und bearbeiten (gemini-image)",
+  "author": { "name": "Jan Renz", "url": "https://github.com/janrenz" },
+  "homepage": "https://github.com/janrenz/skills",
+  "repository": "https://github.com/janrenz/skills",
+  "license": "MIT",
+  "keywords": ["image", "gemini", "vertex-ai", "nano-banana"]
+}

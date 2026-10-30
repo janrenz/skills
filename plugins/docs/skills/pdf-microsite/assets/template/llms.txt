@@ -1,0 +1,15 @@
+# {{KURZTITEL}} – Lesefassung
+
+> Inoffizielle HTML-Lesefassung von {{Dokumenttyp}} „{{Titel}}“ ({{Herausgeber}}, {{Datum}}). Der Text folgt dem Original wörtlich. Maßgeblich ist das PDF.
+
+Seitenangaben: „S. N“ ist die gedruckte Seitenzahl des Papiers. Der Link dahinter öffnet die PDF-Seite. Beim Zitieren die gedruckte Seitenzahl verwenden.
+Nicht aus dem Papier: {{Ergänzungen der Lesefassung, z. B. Grafiken, Tab-Beschriftungen, Zwischenzeilen}}.
+
+## Volltext
+
+- [Volltext als Markdown]({{SITE_URL}}index.md): alle Kapitel mit Seitenverweisen
+- [HTML-Fassung]({{SITE_URL}}): Suche per ?q=Begriff, Abschnitte per #{{kapitel-id}}
+
+## Quelle
+
+- [Original-PDF, {{N}} Seiten]({{PDF_URL}})

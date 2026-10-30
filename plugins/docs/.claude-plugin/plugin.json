@@ -1,0 +1,10 @@
+{
+  "name": "docs",
+  "version": "0.1.0",
+  "description": "PDF-Papiere als barrierefreie, durchsuchbare Microsite mit Prüfskripten (pdf-microsite)",
+  "author": { "name": "Jan Renz", "url": "https://github.com/janrenz" },
+  "homepage": "https://github.com/janrenz/skills",
+  "repository": "https://github.com/janrenz/skills",
+  "license": "MIT",
+  "keywords": ["pdf", "microsite", "accessibility", "wcag"]
+}

@@ -1,0 +1,210 @@
+<!doctype html>
+<!--
+  Vorlage einer PDF-Lesefassung. Alles in {{…}} ersetzen, nicht gebrauchte Bausteine löschen.
+  [[N]] = Herkunftsverweis auf PDF-Seite N; build.py macht daraus einen Link mit gedruckter Seitenzahl.
+  Regeln: Text wörtlich aus dem PDF. Eigenes (Zwischenzeilen, Grafiken, Tab-Beschriftungen) als solches kennzeichnen.
+  Nichts, was es nur mit JavaScript gibt: Inhalte stehen offen im HTML, JS verbessert nur.
+-->
+<html lang="de" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{KURZTITEL, 2–4 Wörter}}</title>
+<meta name="description" content="Lesefassung von {{Dokumenttyp}} „{{Titel}}“ ({{Herausgeber}}, {{Datum}}). Volltext mit Seitenverweisen auf das Original-PDF.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F3">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#13151D">
+<link rel="canonical" href="{{SITE_URL}}">
+<link rel="alternate" type="text/markdown" href="/index.md" title="Volltext als Markdown">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="{{Titel}} – Lesefassung">
+<meta property="og:description" content="{{Ein Satz Inhalt}}">
+<meta property="og:url" content="{{SITE_URL}}">
+<link rel="preload" href="/assets/fonts/karla-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/theme.js"></script>
+<script src="/assets/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "{{KURZTITEL}} – Lesefassung",
+  "inLanguage": "de",
+  "description": "Inoffizielle HTML-Lesefassung. Der Text folgt dem Original; hochgestellte Ziffern nennen die gedruckte Seitenzahl und verlinken die Stelle im PDF.",
+  "encoding": {"@type": "MediaObject", "encodingFormat": "text/markdown", "contentUrl": "{{SITE_URL}}index.md"},
+  "mainEntity": {
+    "@type": "Report",
+    "name": "{{Titel}}",
+    "genre": "{{Impulspapier | Gutachten | Stellungnahme}}",
+    "datePublished": "{{JJJJ-MM-TT}}",
+    "inLanguage": "de",
+    "numberOfPages": {{Seitenzahl}},
+    "author": {"@type": "Organization", "name": "{{Autor/Gremium}}"},
+    "publisher": {"@type": "Organization", "name": "{{Herausgeber}}"},
+    "url": "{{PDF_URL}}",
+    "encodingFormat": "application/pdf"
+  }
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brandmark" href="#top" aria-label="{{KURZTITEL}}, zum Seitenanfang"><span class="sig">{{KÜRZEL}}</span><span class="nm">{{KURZTITEL}}</span></a>
+    <div class="searchwrap needs-js" role="search">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5 18 18"/></svg>
+      <label class="sr" for="q">Im Papier suchen</label>
+      <input id="q" type="search" placeholder="Im Papier suchen" autocomplete="off" spellcheck="false" enterkeyhint="search" aria-describedby="hitcount">
+    </div>
+    <div class="hitnav needs-js">
+      <span id="hitcount" role="status" aria-atomic="true"></span>
+      <button type="button" class="btn" id="prevhit" disabled aria-label="Vorheriger Treffer">↑</button>
+      <button type="button" class="btn" id="nexthit" disabled aria-label="Nächster Treffer">↓</button>
+    </div>
+    <button type="button" class="btn btn-icon needs-js" id="theme">
+      <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8Z"/></svg>
+      <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.3M12 19.1v2.3M4.5 4.5l1.6 1.6M17.9 17.9l1.6 1.6M2.6 12h2.3M19.1 12h2.3M4.5 19.5l1.6-1.6M17.9 6.1l1.6-1.6"/></svg>
+      <span class="sr" id="themelabel">Design wechseln</span>
+    </button>
+  </div>
+  <div class="progress needs-js" id="progress" aria-hidden="true"></div>
+</header>
+
+<div class="shell" id="top">
+  <nav class="rail" aria-labelledby="toc-h">
+   <div class="rail-in">
+    <details class="tocbox" id="tocbox" open>
+    <summary><span>Inhalt</span><span class="here" id="tochere"></span></summary>
+    <h2 id="toc-h">Inhalt</h2>
+    <!-- Ein Eintrag je <section>; href = section-id. Kapitelnummer in .num, sonst aria-hidden Zierzeichen. -->
+    <ul class="toc" id="toc">
+      <li><a href="#{{kapitel-1}}"><span class="num">1</span><span>{{Kurztitel Kapitel 1}}</span><span class="cnt" hidden></span></a></li>
+      <li><a href="#literatur"><span class="num" aria-hidden="true">·</span><span>Literatur</span><span class="cnt" hidden></span></a></li>
+    </ul>
+    <p class="railnote">Lesefassung vom {{Datum}}.<br>
+      <a href="{{PDF_URL}}">Original-PDF, {{N}} Seiten</a><br>
+      <a href="/index.md">Volltext als Markdown</a></p>
+    </details>
+   </div>
+  </nav>
+
+  <main id="inhalt" tabindex="-1">
+
+    <div class="hero">
+      <p class="eyebrow">{{Dokumenttyp}} {{des Gremiums}}</p>
+      <h1>{{Vollständiger Titel wie im PDF}}</h1>
+      <!-- Standfirst: ein wörtliches Kernzitat, nie eine eigene Zusammenfassung -->
+      <p class="standfirst">„{{Kernsatz aus dem Papier}}“ [[{{PDF-Seite}}]]</p>
+      <dl class="meta">
+        <div><dt>Verabschiedet</dt><dd><time datetime="{{JJJJ-MM-TT}}">{{TT.MM.JJJJ}}</time> [[{{PDF-Seite}}]]</dd></div>
+        <div><dt>Umfang</dt><dd>{{N}} Seiten</dd></div>
+      </dl>
+      <p class="pagenote">Der Text folgt dem Original. Die hochgestellten Ziffern sind die gedruckten Seitenzahlen des Papiers; ein Klick öffnet die Stelle im PDF.</p>
+    </div>
+
+    <!-- Kapitel: eine section je Kapitel des PDFs, gleiche Reihenfolge, gleiche Überschrift. -->
+    <section id="{{kapitel-1}}" aria-labelledby="h-{{kapitel-1}}">
+      <p class="kicker">Kapitel 1</p>
+      <h2 class="sec" id="h-{{kapitel-1}}"><span class="n">1</span>{{Kapitelüberschrift}} [[{{PDF-Seite}}]]</h2>
+      <div class="wrap">
+        <p class="lede">{{Erster Absatz, wörtlich}}</p>
+        <p>{{Absatz, wörtlich}} [[{{PDF-Seite, an der der Absatz endet}}]]</p>
+      </div>
+
+      <!-- Karten: für Aufzählungen gleichrangiger Begriffe aus dem Text (Prinzipien, Kriterien). -->
+      <ul class="cards">
+        <li class="card"><h3>{{Begriff}}</h3><p>{{Wortlaut aus dem Papier}}</p></li>
+        <li class="card"><h3>{{Begriff}}</h3><p>{{Wortlaut aus dem Papier}} [[{{PDF-Seite}}]]</p></li>
+      </ul>
+
+      <!-- Kette: nur wenn das Papier selbst eine Abfolge beschreibt (Input → Prozess → Wirkung). -->
+      <ol class="chain" aria-label="{{Was die Kette zeigt}}">
+        <li><span class="cn" aria-hidden="true">{{Rolle}}</span><strong>{{Glied}}</strong><span class="q">{{Wortlaut}}</span></li>
+        <li><span class="cn" aria-hidden="true">{{Rolle}}</span><strong>{{Glied}}</strong><span class="q">{{Wortlaut}}</span></li>
+      </ol>
+
+      <!-- Tabs: nur für ≥3 gleichartige Abschnitte von je mindestens einem Absatz (z. B. Schritte).
+           Ohne JS stehen alle Panels untereinander. data-tab = kurze Beschriftung (Eigentext, auch in .step-no). -->
+      <div class="tabs" data-tabs="{{Name der Gruppe}}">
+        <div class="tabpanel" id="schritt-1" data-tab="{{Kurzname}}">
+          <span class="step-no">Schritt 1 von 2 · {{Kurzname}}</span>
+          <p>{{Wortlaut}} [[{{PDF-Seite}}]]</p>
+        </div>
+        <div class="tabpanel" id="schritt-2" data-tab="{{Kurzname}}">
+          <span class="step-no">Schritt 2 von 2 · {{Kurzname}}</span>
+          <p>{{Wortlaut}} [[{{PDF-Seite}}]]</p>
+        </div>
+      </div>
+
+      <!-- Kasten: für Kästen/Exkurse des PDFs. Grafiken daraus sind Eigenleistung → in figcaption sagen. -->
+      <aside class="casebox" aria-labelledby="h-kasten-1">
+        <p class="kicker">Kasten im Papier</p>
+        <h3 id="h-kasten-1">{{Titel des Kastens}} [[{{PDF-Seite}}]]</h3>
+        <p>{{Wortlaut}}</p>
+        <blockquote>
+          <p>„{{Fremdzitat, wie im Papier zitiert}}“</p>
+          <footer>{{Quelle, wie im Papier angegeben}}</footer>
+        </blockquote>
+      </aside>
+    </section>
+
+    <!-- Personenliste mit Filter (Mitglieder, Autorinnen): Gruppen wie im PDF. -->
+    <section id="mitglieder" aria-labelledby="h-mitglieder-sec">
+      <h2 class="sec" id="h-mitglieder-sec">{{Das Gremium}} [[{{PDF-Seite}}]]</h2>
+      <div class="filterbar needs-js">
+        <label class="sr" for="pfilter">Mitglieder filtern</label>
+        <input id="pfilter" type="search" placeholder="Name, Fachgebiet oder Hochschule filtern" autocomplete="off" aria-describedby="pcount">
+        <span class="count" id="pcount" role="status">{{n}} von {{n}}</span>
+      </div>
+      <h3 class="people-group" id="h-gruppe-1">Mitglieder</h3>
+      <ul class="people" aria-labelledby="h-gruppe-1">
+        <li><div class="nm">{{Name}}</div><div class="ro">{{Funktion}}</div><div class="inst">{{Einrichtung}}</div></li>
+      </ul>
+      <p class="empty" id="pempty" hidden>Keine Mitglieder gefunden.</p>
+    </section>
+    <!-- site.js filtert "#kommission .people > li"; Section-id anpassen oder Selektor in site.js. -->
+
+    <section id="literatur" aria-labelledby="h-literatur">
+      <h2 class="sec" id="h-literatur">Literatur [[{{PDF-Seite}}]]</h2>
+      <div class="filterbar needs-js">
+        <label class="sr" for="rfilter">Literatur filtern</label>
+        <input id="rfilter" type="search" placeholder="Autor, Jahr oder Stichwort filtern" autocomplete="off" aria-describedby="rcount">
+        <span class="count" id="rcount" role="status">{{n}} von {{n}}</span>
+      </div>
+      <!-- Einträge vollständig übernehmen, inkl. Untertitel, Reihen und URLs (als Link, sichtbar ausgeschrieben). -->
+      <ul class="refs" id="refs">
+        <li><span class="au">{{Autor, A. (Jahr).}}</span> {{Titel. Quelle.}} <a href="{{url}}">{{url}}</a></li>
+      </ul>
+      <p class="empty" id="rempty" hidden>Keine Einträge gefunden.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="fgrid">
+      <div>
+        <h2>Quelle</h2>
+        <p id="citetext">{{Zitierangabe im Stil des Herausgebers, mit PDF-URL}}</p>
+        <p class="needs-js"><button type="button" class="btn" id="copycite">Zitierangabe kopieren</button><span class="copied" id="copystatus" role="status"></span></p>
+        <p><a href="{{PDF_URL}}">Original-PDF herunterladen</a></p>
+      </div>
+      <div>
+        <h2>Herausgeber des Papiers</h2>
+        <p>{{Impressumsangaben aus dem PDF}}</p>
+      </div>
+      <div>
+        <h2>Zu dieser Seite</h2>
+        <p>Unabhängige Lesefassung, kein Angebot von {{Herausgeber}}. Maßgeblich ist das Original-PDF. {{Liste der Ergänzungen, z. B. Grafiken}}. Die Seite lädt keine Inhalte von Drittanbietern und setzt keine Cookies.</p>
+        <p><a href="/index.md">Volltext als Markdown</a> · <a href="/llms.txt">Hinweise für KI-Agenten</a></p>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

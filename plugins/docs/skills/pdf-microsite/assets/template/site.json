@@ -1,0 +1,6 @@
+{
+  "pdf": "{{PDF_URL}}",
+  "page_offset": 0,
+  "first_numbered": 1,
+  "site_url": "{{SITE_URL}}"
+}
