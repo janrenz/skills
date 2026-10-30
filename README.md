@@ -1,8 +1,10 @@
 # skills
 
-Ein **Plugin-Marketplace für Claude Code** mit allgemeinen Skills von Jan Renz.
+**English** · [Deutsch](README.de.md)
 
-## Installation
+A **plugin marketplace for Claude Code** with general-purpose skills by Jan Renz. For the software factory, see [janrenz/factory](https://github.com/janrenz/factory).
+
+## Install
 
 In Claude Code:
 
@@ -12,51 +14,51 @@ In Claude Code:
 /plugin install media@janrenz-skills
 ```
 
-Im Terminal geht dasselbe mit `claude plugin marketplace add janrenz/skills` und `claude plugin install docs@janrenz-skills`.
+In a terminal the same works with `claude plugin marketplace add janrenz/skills` and `claude plugin install docs@janrenz-skills`.
 
 ## Skills
 
-| Plugin | Skill | Zweck |
+| Plugin | Skill | Purpose |
 |---|---|---|
-| `docs` | `pdf-microsite` | Macht aus einem PDF-Papier eine barrierefreie, durchsuchbare Lesefassung als statische Microsite, mit Textabgleich, axe-Audit und Layoutprüfung. |
-| `media` | `gemini-image` | Erzeugt und bearbeitet Bilder mit einem Gemini-Bildmodell über das mitgelieferte Skript `gen-image`. |
+| `docs` | `pdf-microsite` | Turns a PDF paper into an accessible, searchable reading version as a static microsite, with text comparison against the PDF, an axe audit and layout checks. |
+| `media` | `gemini-image` | Generates and edits images with a Gemini image model through the bundled `gen-image` script. |
 
-## Voraussetzungen
+## Requirements
 
-- `pdf-microsite`: Python 3, `pdftotext`/`pdfinfo` (poppler), Node.js für die Prüfskripte. Die Node-Abhängigkeiten installiert einmalig `npm i` im Ordner `scripts/` des Skills.
-- `gemini-image`: [`uv`](https://docs.astral.sh/uv/) installiert die Abhängigkeit `google-genai` beim ersten Aufruf selbst. Ohne `uv` reicht `pip install google-genai`.
+- `pdf-microsite`: Python 3, `pdftotext`/`pdfinfo` (poppler), Node.js for the check scripts. Run `npm i` once in the skill's `scripts/` folder.
+- `gemini-image`: [`uv`](https://docs.astral.sh/uv/) installs the `google-genai` dependency on first use. Without `uv`, `pip install google-genai` is enough.
 
-## Konfiguration von gemini-image
+## Configuring gemini-image
 
-Das Skript liest **Umgebungsvariablen**. Sie können auch in `~/.config/gen-image/config.env` stehen (oder in der Datei, auf die `GEN_IMAGE_CONFIG` zeigt); gesetzte Variablen haben Vorrang vor der Datei.
+The script reads **environment variables**. They can also live in `~/.config/gen-image/config.env` (or the file `GEN_IMAGE_CONFIG` points to); variables that are set win over the file.
 
-| Variable | Bedeutung |
+| Variable | Meaning |
 |---|---|
-| `GOOGLE_GENAI_USE_VERTEXAI` | `true` für Vertex AI; wird automatisch gesetzt, wenn nur `GOOGLE_CLOUD_PROJECT` vorhanden ist |
-| `GOOGLE_CLOUD_PROJECT` | Projekt-ID in Google Cloud |
-| `GOOGLE_CLOUD_LOCATION` | Region, Standard `global` |
-| `GOOGLE_APPLICATION_CREDENTIALS` | Pfad zur JSON-Datei eines Service-Accounts mit `roles/aiplatform.user`; ohne sie gelten die Application Default Credentials von `gcloud` |
-| `GEMINI_API_KEY` | Alternative zu Vertex AI: API-Key aus Google AI Studio |
-| `GENAI_IMAGE_MODEL` | Standardmodell, sonst `gemini-3.1-flash-image` |
+| `GOOGLE_GENAI_USE_VERTEXAI` | `true` for Vertex AI; set automatically when only `GOOGLE_CLOUD_PROJECT` is present |
+| `GOOGLE_CLOUD_PROJECT` | Google Cloud project id |
+| `GOOGLE_CLOUD_LOCATION` | region, default `global` |
+| `GOOGLE_APPLICATION_CREDENTIALS` | path to a service-account JSON with `roles/aiplatform.user`; without it, `gcloud` application default credentials apply |
+| `GEMINI_API_KEY` | alternative to Vertex AI: an API key from Google AI Studio |
+| `GENAI_IMAGE_MODEL` | default model, otherwise `gemini-3.1-flash-image` |
 
-Beispiel für `~/.config/gen-image/config.env`:
+Example `~/.config/gen-image/config.env`:
 
 ```
 GOOGLE_GENAI_USE_VERTEXAI=true
-GOOGLE_CLOUD_PROJECT=mein-projekt
+GOOGLE_CLOUD_PROJECT=my-project
 GOOGLE_CLOUD_LOCATION=global
-GOOGLE_APPLICATION_CREDENTIALS=/pfad/zu/service-account.json
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
 ```
 
-Die Datei enthält nur **Verweise**. Der Schlüssel selbst gehört mit `chmod 600` an einen privaten Ort und **nie in ein Repository**.
+The file holds only **references**. The key itself belongs in a private place with `chmod 600` and **never in a repository**.
 
-## Einen Skill hinzufügen
+## Adding a skill
 
-1. Ordner `plugins/<plugin>/skills/<skill>/` mit einer `SKILL.md` anlegen (Frontmatter mit `name` und `description`). Mitgelieferte Skripte referenziert die `SKILL.md` über `${CLAUDE_SKILL_DIR}`.
-2. Für ein neues Plugin zusätzlich `plugins/<plugin>/.claude-plugin/plugin.json` anlegen und das Plugin in `.claude-plugin/marketplace.json` eintragen.
-3. `version` in der `plugin.json` erhöhen und eine Zeile in `CHANGELOG.md` ergänzen.
-4. Prüfen mit `claude plugin validate .` und vor dem Push mit `gitleaks detect -s .`.
+1. Create `plugins/<plugin>/skills/<skill>/` with a `SKILL.md` (frontmatter with `name` and `description`). Bundled scripts are referenced from `SKILL.md` via `${CLAUDE_SKILL_DIR}`.
+2. For a new plugin, also add `plugins/<plugin>/.claude-plugin/plugin.json` and list the plugin in `.claude-plugin/marketplace.json`.
+3. Bump `version` in `plugin.json` and add a line to `CHANGELOG.md`.
+4. Check with `claude plugin validate .` and, before pushing, `gitleaks detect -s .`.
 
-## Lizenz
+## License
 
-MIT, siehe [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).
