@@ -133,7 +133,7 @@ npx vercel link --yes --project <slug>     # legt .env.local an, das nicht commi
 npx vercel deploy --yes                    # Preview, meist per Vercel Authentication geschützt
 npx vercel curl / --deployment <preview-url> -- -sI     # Header prüfen trotz Schutz
 npx vercel deploy --prod --yes
-node <skill>/scripts/audit.mjs https://<slug>.example.org/ ./shots-live > audit-live.json
+node <skill>/scripts/audit.mjs https://<slug>.vercel.app/ ./shots-live > audit-live.json
 ```
 
 Prüfe auf der Preview, dass `/build.py`, `/src/index.html` und `/.env.local` mit 404 antworten.
@@ -193,4 +193,4 @@ Kosmetik.
 | `scripts/coverage.py` | Welche Sätze des PDFs fehlen auf der Seite? |
 | `scripts/audit.mjs` | axe (WCAG 2.2 AA) hell und dunkel, Überlauf, Klickflächen, Verhalten, ohne-JS-Sicht, Screenshots |
 | `references/review-checklist.md` | Prüfliste UX, Sicherheit, Barrierefreiheit, Responsivität, Agents, mit Befunden aus dem Referenzprojekt |
-| `references/cms-integration.md` | Einbindung in TYPO3/WordPress-Auftritte (Beispiel kmk.org / swk-bildung.org) |
+| `references/cms-integration.md` | Einbindung in TYPO3/WordPress-Auftritte |
