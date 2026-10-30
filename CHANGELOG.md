@@ -4,3 +4,5 @@
 
 - `docs`: Skill `pdf-microsite` aufgenommen.
 - `media`: Skill `gemini-image` mit Skript `gen-image` aufgenommen; Konfiguration über Umgebungsvariablen.
+
+- pdf-microsite: Beispielrecherche zu konkreten Auftritten durch eine allgemeine Prüfliste ersetzt.

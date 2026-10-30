@@ -15,8 +15,8 @@ description: |
 # PDF-Papier → Microsite
 
 Ergebnis ist **eine** statische Seite. Sie gibt den Text des PDFs wörtlich wieder und macht ihn
-lesbar, durchsuchbar und zitierbar. Referenz: https://swk-foerdermonitoring.vercel.app
-(SWK-Impulspapier 2022). Aus diesem Projekt stammt die Vorlage in `assets/template/`.
+lesbar, durchsuchbar und zitierbar. Die Vorlage in `assets/template/` stammt aus der
+Lesefassung eines Impulspapiers und ist seitdem allgemein gehalten.
 
 Drei Grundsätze, die alles andere entscheiden:
 
@@ -133,7 +133,7 @@ npx vercel link --yes --project <slug>     # legt .env.local an, das nicht commi
 npx vercel deploy --yes                    # Preview, meist per Vercel Authentication geschützt
 npx vercel curl / --deployment <preview-url> -- -sI     # Header prüfen trotz Schutz
 npx vercel deploy --prod --yes
-node <skill>/scripts/audit.mjs https://<slug>.vercel.app/ ./shots-live > audit-live.json
+node <skill>/scripts/audit.mjs https://<slug>.example.org/ ./shots-live > audit-live.json
 ```
 
 Prüfe auf der Preview, dass `/build.py`, `/src/index.html` und `/.env.local` mit 404 antworten.

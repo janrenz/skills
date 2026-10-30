@@ -15,7 +15,7 @@
   tbtn.addEventListener("click", function(){
     var next=isDark() ? "light" : "dark";
     root.setAttribute("data-theme", next);
-    try{ localStorage.setItem("swk-theme", next); }catch(e){}
+    try{ localStorage.setItem("microsite-theme", next); }catch(e){}
     paint();
   });
   darkMq.addEventListener("change", function(){ if(!root.getAttribute("data-theme")) paint(); });

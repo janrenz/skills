@@ -1,7 +1,7 @@
 # Prüfliste Lesefassung
 
 Jeder Punkt hat eine Prüfung. „auto“ heißt: Eines der Skripte findet den Fehler. Die anderen
-Punkte muss man ansehen. Die Beispiele in Klammern stammen aus dem Review der SWK-Lesefassung
+Punkte muss man ansehen. Die Beispiele in Klammern stammen aus dem Review einer echten Lesefassung
 (September 2026).
 
 ## 1. Wortlaut und Quellen (vor allem anderen)
